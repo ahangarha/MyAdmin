@@ -30,5 +30,5 @@
  * @created : 01 May 2014
 */
 
-// Environment
-define('MA_ENVIRONMENT', 'development');
+// Environment (development|working)
+define('MA_ENVIRONMENT', 'working');
