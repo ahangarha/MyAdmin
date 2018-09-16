@@ -20,4 +20,10 @@ define('MA_MODULES', [
 		'controller' => 'index',
 	],
 
+	'users' => [
+		'url_path'   => 'user',
+		'enabled'    => TRUE,
+		'controller' => 'index',
+	],
+
 ]);

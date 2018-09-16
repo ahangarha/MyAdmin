@@ -86,8 +86,7 @@ class controller
 		$this->tpl->assign([
 			'DOMAIN'   => $this->client->domain(),
 			'LANGUAGE' => $this->language,
-			//'BROWSER'  => MA_BROWSER_INFO,
-			//'HOMEPAGE' => MA_URL['base_path']
+			'BASEPATH' => $this->url['base_path']
 		]);
 	}
 }

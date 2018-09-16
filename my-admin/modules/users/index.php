@@ -23,25 +23,31 @@
 */
 
 /**
- * Admin
+ * Users
  *
- * @modified : 26 July 2018
+ * @modified : 16 September 2018
  * @created  : 03 September 2014
  * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
 
-namespace myadmin\module;
+namespace myadmin\module\users;
 
 defined('MA_PATH') OR exit('Restricted access');
 
-class admin extends \myadmin\controller
+class index extends \myadmin\controller
 {
 	/**
-	 * Constructor
+	 * Index
 	*/
-	public function __construct($language, $url = []) {
-		parent::__construct($language, $url);
-		echo "Admin";
+	public function index($params) {
+		echo 'users';
+	}
+
+	/**
+	 * Login
+	*/
+	public function login($params) {
+		echo 'users::login';
 	}
 
 }

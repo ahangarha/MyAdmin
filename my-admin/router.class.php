@@ -100,7 +100,7 @@ class ma_router
 			$file = MA_MODULES[$mod]['controller'].'.php';
 			$def = TRUE;
 		}
-		else {
+		else if (isset($this->url['path'][0]) == TRUE) {
 			$path = $this->security->filter($this->url['path'][0], 'alphabet', 32);
 			if ($path == FALSE) {
 				return FALSE;
@@ -109,6 +109,9 @@ class ma_router
 			unset($this->url_params[0]);
 			$cn = $path;
 			$file = $path.'.php';
+		}
+		else {
+			return FALSE;
 		}
 
 		$this->class_name = '\myadmin\\module\\'.$mod.'\\'.$cn;
