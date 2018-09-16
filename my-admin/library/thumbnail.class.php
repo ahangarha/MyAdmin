@@ -112,7 +112,7 @@ class ma_thumbnail
 	 * Auto
 	 * by config default sizes
 	 *
-	 @ param bool
+	 * @param bool
 	*/
 	public function auto_resize($save_path = NULL) {
 		if (!$this->phpthumb) {

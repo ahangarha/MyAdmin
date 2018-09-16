@@ -26,7 +26,7 @@
 /**
  * Index
  *
- * @modified : 01 December 2017
+ * @modified : 16 September 2018
  * @created  : 01 May 2014
 */
 
@@ -34,7 +34,7 @@
 define('MA_ENVIRONMENT', 'development');
 
 // Core
-$init_file = dirname($_SERVER['DOCUMENT_ROOT']).'/my-admin/myadmin.php';
+$init_file = dirname(__DIR__).'/my-admin/myadmin.php';
 if (is_file($init_file) == FALSE) {
 	$init_file = __DIR__.'/my-admin/myadmin.php';
 	if (is_file($init_file) == FALSE) {
@@ -46,9 +46,11 @@ if (is_file($init_file) == FALSE) {
 
 require_once($init_file);
 
-function myWebsite() {
+function myWebsite($run = TRUE) {
 	$myadmin = new myadmin(__FILE__, __DIR__);
-	$myadmin->run();
+	if ($run == TRUE) {
+		$myadmin->run();
+	}
 }
 
-myWebsite();
+myWebsite(TRUE);

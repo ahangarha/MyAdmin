@@ -27,8 +27,8 @@ defined('MA_PATH') OR exit('Restricted access');
 /**
  * Common functions
  *
- * @modified : 26 July 2018
- * @created  : 03 September 2011
+ * @modified : 16 September 2018
+ * @created  : 03 September 2014
  * @since    : version 0.1
  * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
@@ -237,11 +237,11 @@ if (function_exists('ma_error') == FALSE) {
 				'message' => (empty($message)) ? NULL : str_replace(['<!--','-->'], '', $message)
 			]);
 		}
-		else if (is_file(MA_PATH.'/var/error/'.$code.'.phtml')) {
-			require_once MA_PATH.'/var/error/'.$code.'.phtml';
+		else if (is_file(MA_PATH.'/templates/errors/'.$code.'.phtml')) {
+			require_once MA_PATH.'/templates/errors/'.$code.'.phtml';
 		}
-		else if (is_file(MA_PATH.'/var/error/default.phtml')) {
-			require_once MA_PATH.'/var/error/default.phtml';
+		else if (is_file(MA_PATH.'/templates/errors/default.phtml')) {
+			require_once MA_PATH.'/templates/errors/default.phtml';
 		}
 		else {
 			echo '<!DOCTYPE HTML><html><head>';
@@ -511,15 +511,19 @@ if (function_exists('ma_http_status') == FALSE) {
 		];
 
 		// Set header
+		if ($code) {
+			$code = (int) $code;
+		}
+
 		if ($set == TRUE && isset($http_status[$code])) {
 			$text = $http_status[$code];
-			$server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : FALSE;
+			$server_protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : FALSE;
 
-			if (substr(php_sapi_name(), 0, 3) == 'cgi') {
+			if (MA_CLI == TRUE) {
 				header("Status: {$code} {$text}", TRUE);
 			}
 			else if ('HTTP/1.1' == $server_protocol || 'HTTP/1.0' == $server_protocol) {
-				header($server_protocol." {$code} {$text}", TRUE, $code);
+				header($server_protocol." {$code} {$text}", FALSE, $code);
 			}
 			else {
 				header("HTTP/1.1 {$code} {$text}", TRUE, $code);
@@ -780,15 +784,14 @@ if (function_exists('ma_random') == FALSE) {
  * @return string or void
 */
 if (function_exists('ma_exit') == FALSE) {
-	function ma_exit($message = NULL, $http_status = 503, $exite_failure = TRUE) {
+	function ma_exit($message = NULL, $http_status = 503) {
+		if ($http_status) {
+			ma_http_status($http_status);
+		}
 		if ($message) {
 			echo $message;
 		}
-		$err = $exite_failure == TRUE ? EXIT_FAILURE : EXIT_SUCCESS;
-		if ($http_status != FALSE) {
-			ma_http_status($http_status);
-		}
-		exit($err);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -820,7 +823,7 @@ function ma_info($calendar = 'persian') {
 		'memcached' => defined('MA_MEMCACHED') == TRUE && MA_MEMCACHED != FALSE ? 'Enabled' : 'Disabled',
 		'timezone'  => date('e'),
 		// Server
-		'document_root' => $_SERVER['DOCUMENT_ROOT'],
+		'document_root' => isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : NULL,
 		'php_version'   => $php_v,
 		'zend_version'  => zend_version(),
 		'http_host' => isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'Unknown',

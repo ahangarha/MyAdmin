@@ -27,7 +27,7 @@ defined('MA_PATH') OR exit('Restricted access');
 /**
  * Captcha Class
  *
- * @modified : 20 November 2017
+ * @modified : 16 September 2018
  * @created  : 25 October 2017
  * @since    : version 0.4
  * @author   : Ali Bakhtiar (ali@persianicon.com)
@@ -79,10 +79,10 @@ class ma_captcha
 	public $circle_color = [0, 0, 0];
 
 	// Fonts dir
-	public $font_dir = MA_PATH.'/var/captcha/font';
+	public $font_dir = MA_PATH.'/captcha/font';
 
 	// Background dir
-	public $background_dir = MA_PATH.'/var/captcha/background';
+	public $background_dir = MA_PATH.'/captcha/background';
 
 	// Font file - selected file - (string)
 	public $font_file;
@@ -346,7 +346,8 @@ class ma_captcha
 	 * @return string
 	*/
 	protected function hash($input) {
-		return md5(strtolower($input).MA_ENCRYPTION_KEY);
+		$enc_key = defined('MA_ENCRYPTION_KEY') ? MA_ENCRYPTION_KEY : 'MA';
+		return md5(strtolower($input).$enc_key);
 	}
 
 	/**

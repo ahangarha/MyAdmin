@@ -28,7 +28,7 @@ defined('MA_PATH') OR exit('Restricted access');
  * MyAdmin Class
  *
  * @modified : 26 July 2018
- * @created  : 03 September 2011
+ * @created  : 03 September 2014
  * @since    : version 0.1
  * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
@@ -81,6 +81,9 @@ class myadmin
 			'Pragma' => 'no-cache'
 		]);
 
+		// modules list
+		$this->get_modules();
+
 		return;
 	}
 
@@ -88,7 +91,6 @@ class myadmin
 	 * Run
 	*/
 	public function run() {
-		$this->get_modules();
 		$router = new ma_router();
 		$router->module_loader();
 		return;

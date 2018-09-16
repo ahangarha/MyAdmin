@@ -1,0 +1,20 @@
+<?php
+require_once ( __DIR__ . '/template.phtml');
+ma_error_template_header();
+ma_error_template_close();
+?>
+	<div class="container">
+	<div class="row">
+	<div class="col-lg-12">
+		<?php
+		if($message){
+			echo '<div>'.nl2br($message).'</div>';
+			echo '<hr class="featurette-divider">';
+		}
+		?>
+	</div>
+	</div>
+	</div>
+<?php
+ma_error_template_footer();
+?>

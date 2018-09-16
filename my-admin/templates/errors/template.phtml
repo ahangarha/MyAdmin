@@ -1,0 +1,130 @@
+<?php
+if(!function_exists('ma_error_template_header')){
+function ma_error_template_header($title = null)
+{
+	if(defined('MA_DOMAIN')){
+		$domain = MA_DOMAIN;
+	}
+	else if(isset($_SERVER['HTTP_HOST'])) {
+		$domain = htmlentities(addslashes($_SERVER['HTTP_HOST']));
+		$domain = str_replace('www.', '', $domain);
+	}
+	else {
+		$domain = 'persianicon.com';
+	}
+	if (!$title) {
+		$title = $domain;
+	}
+	$cdn = '//static.persianicon.com/';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title><?= $title; ?></title>
+<link href="<?= $cdn; ?>ajax/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+   <script src="<?= $cdn; ?>ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
+   <script src="<?= $cdn; ?>ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style>
+.navbar{
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+}
+
+footer{
+    width:100%;
+    height:50px;
+    position:absolute;
+    bottom:0;
+    top:auto;
+    font:0.9em Verdana,Arial,Tahoma;
+}
+</style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="//<?= $domain ?>"><?= ucfirst($domain) ?></a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                   <li><a href="https://www.persianicon.com/" target="_blank">PersianICON</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<?php
+}
+}
+
+if(!function_exists('ma_error_template_footer')){
+function ma_error_template_footer()
+{
+	$cdn = '//static.persianicon.com/';
+?>
+<footer>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<small>Copyright &copy; <?= date('Y') ?> PersianICON</small>
+		</div>
+	</div>
+</div>
+</footer>
+<script src="<?= $cdn; ?>ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="<?= $cdn; ?>ajax/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
+<?php
+}
+}
+
+if(!function_exists('ma_error_template_close')){
+function ma_error_template_close()
+{
+	if (defined('MA_EXIT')) {
+		echo '<div style="height:100px"></div>';
+		return;
+	}
+
+	if (defined('MA_DOMAIN')) {
+		$domain = MA_DOMAIN;
+	}
+	else if (isset($_SERVER['HTTP_HOST'])) {
+		$domain = htmlentities(addslashes($_SERVER['HTTP_HOST']));
+		$domain = str_replace('www.', '', $domain);
+	}
+	else {
+		$domain = 'persianicon.com';
+	}
+?>
+<div class="headline">
+<div class="container">
+	<b>Website is Closed</b>
+	<p>Sorry, We are currently undergoing maintenance.<br>Please try again later.<br></p>
+	<small>Technical support : webmaster@<?= $domain ?></small>
+	<hr class="featurette-divider">
+</div>
+</div>
+<?php
+}
+}
+?>

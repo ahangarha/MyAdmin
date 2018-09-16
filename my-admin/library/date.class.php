@@ -30,7 +30,7 @@ require_once(MA_PATH.'/library/calendar/persian_date.php');
  * Date Class
  *
  * @modified : 26 July 2018
- * @created  : 03 September 2011
+ * @created  : 03 September 2014
  * @since    : version 0.1
  * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
