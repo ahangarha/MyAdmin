@@ -397,6 +397,10 @@ class ma_template_engine
 		// Sort
 		// last is first
 		$TemplateDir = $this->TemplateDir;
+		if (is_array($TemplateDir) == FALSE) {
+			ma_error(500, 'error::template_directory::not_found');
+		}
+
 		rsort($TemplateDir);
 
 		$dir = $file = NULL;

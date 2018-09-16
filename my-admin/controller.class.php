@@ -29,7 +29,7 @@ defined('MA_PATH') OR exit('Restricted access');
 /**
  * Controller
  *
- * @modified : 26 July 2018
+ * @modified : 16 September 2018
  * @created  : 08 November 2017
  * @since    : version 0.4
  * @author   : Ali Bakhtiar (ali@persianicon.com)
@@ -41,19 +41,53 @@ class controller
 	protected $security;
 	protected $db;
 	protected $language;
+	protected $tpl;
+	protected $module_name;
+	protected $url = [];
 
 	/**
 	 * Constructor
 	*/
-	public function __construct($language = NULL) {
+	public function __construct($language = NULL, $url = []) {
 		$this->client   =& ma_class('client');
 		$this->security =& ma_class('security');
-		$this->db =& ma_class('database');
-
-		//$this->db->query("SELECT * FROM `posts`");
+		$this->db  =& ma_class('database');
+		$this->url = $url;
 
 		if ($language) {
 			$this->language = $language;
 		}
+
+		if (defined('MA_LOAD_TPL') == FALSE || MA_LOAD_TPL == TRUE) {
+			$this->template_engine_init();
+		}
+	}
+
+	/**
+	 * Template engine initializing
+	*/
+	public function template_engine_init() {
+		$this->tpl =& ma_class('template');
+		$template_name = ma_config('template_name');
+		if (empty($template_name) == TRUE) {
+			$template_name = 'default';
+		}
+
+		$this->tpl->setTemplateDir(MA_PATH.'/templates/'.$template_name);
+
+		if (isset($this->url['module'])) {
+			$this->tpl->setTemplateDir(MA_PATH.'/modules/'.$this->url['module'].'/templates/');
+		}
+		$this->tpl->setCompileDir(MA_PATH.'/tmp/tpl/compiled-'.$this->language);
+		$this->tpl->setCacheDir(MA_PATH.'/tmp/tpl/cache-'.$this->language);
+
+		$this->tpl->strip = FALSE; // false=>off|true=>full|2=>mini
+		$this->tpl->cache = FALSE;
+		$this->tpl->assign([
+			'DOMAIN'   => $this->client->domain(),
+			'LANGUAGE' => $this->language,
+			//'BROWSER'  => MA_BROWSER_INFO,
+			//'HOMEPAGE' => MA_URL['base_path']
+		]);
 	}
 }

@@ -73,7 +73,7 @@ class ma_router
 		}
 
 		// call
-		$mod = new $this->class_name($this->url['language']);
+		$mod = new $this->class_name($this->url['language'], $this->url);
 
 		if (method_exists($mod, $this->method_name) == FALSE) {
 			ma_error(404, 'Module not found (code 04)');

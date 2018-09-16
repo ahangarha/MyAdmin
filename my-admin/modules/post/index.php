@@ -40,7 +40,7 @@ class index extends \myadmin\controller
 	 * Index
 	*/
 	public function index($params) {
-		printr($params);
+		$this->tpl->display("post-welcome.phtml");
 	}
 
 }
