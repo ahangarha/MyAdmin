@@ -1,6 +1,6 @@
 <?php
 /**
- * MyAdmin CMS
+ * MyAdmin
  *
  * Copyright (C) 2014-2018 Persian Icon Software
  *
@@ -17,38 +17,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package	  MyAdmin Content Management System
- * @link      http://www.myadmincms.com/
+ * @package	  MyAdmin CMS
  * @copyright Persian Icon Software
- * @link      https://www.persianicon.com/
+ * @link      https://www.persianicon.com/myadmin
 */
 
 /**
- * Index
+ * Admin > Login
  *
- * @modified : 01 December 2017
- * @created  : 01 May 2014
+ * @modified : 26 July 2018
+ * @created  : 03 September 2011
+ * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
 
-// Environment (development|working)
-define('MA_ENVIRONMENT', 'development');
+namespace myadmin\module\admin;
 
-// Core
-$init_file = dirname($_SERVER['DOCUMENT_ROOT']).'/my-admin/myadmin.php';
-if (is_file($init_file) == FALSE) {
-	$init_file = __DIR__.'/my-admin/myadmin.php';
-	if (is_file($init_file) == FALSE) {
-		header('HTTP/1.1 500 Internal Server Error');
-		echo 'error_00::myadmin.php_not_found';
-		exit(1);
+defined('MA_PATH') OR exit('Restricted access');
+
+class login extends \myadmin\module\admin
+{
+	/**
+	 * Login (index)
+	*/
+	public function login($params) {
+		echo "::Login";
 	}
+
+	/**
+	 * Auth
+	*/
+	public function auth($params) {
+		echo "::Auth";
+		printr($params);
+	}
+
 }
-
-require_once($init_file);
-
-function myWebsite() {
-	$myadmin = new myadmin(__FILE__, __DIR__);
-	$myadmin->run();
-}
-
-myWebsite();
