@@ -25,8 +25,8 @@
 /**
  * Post
  *
- * @modified : 26 July 2018
- * @created  : 03 September 2011
+ * @modified : 16 September 2018
+ * @created  : 03 September 2014
  * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
 
@@ -40,7 +40,6 @@ class index extends \myadmin\controller
 	 * Index
 	*/
 	public function index($params) {
-		echo "Post";
 		printr($params);
 	}
 
