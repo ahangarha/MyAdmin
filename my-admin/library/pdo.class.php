@@ -27,11 +27,15 @@ defined('MA_PATH') OR exit('Restricted access');
 /**
  * PDO Class
  *
- * @modified : 26 July 2018
+ * @modified : 17 September 2018
  * @created  : 25 June 2015
  * @since    : version 0.4
  * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
+
+if (class_exists('PDO') == FALSE) {
+	ma_exit('Error: PDO library is not installed on your web server.');
+}
 
 class ma_pdo extends PDO
 {

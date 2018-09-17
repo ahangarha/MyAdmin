@@ -27,11 +27,15 @@ defined('MA_PATH') OR exit('Restricted access');
 /**
  * Captcha Class
  *
- * @modified : 16 September 2018
+ * @modified : 17 September 2018
  * @created  : 25 October 2017
  * @since    : version 0.4
  * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
+
+if (extension_loaded('gd') == FALSE || function_exists('gd_info') == FALSE) {
+	ma_exit('Error: GD library is not installed on your web server.');
+}
 
 class ma_captcha
 {
