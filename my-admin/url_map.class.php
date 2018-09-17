@@ -74,11 +74,12 @@ class ma_url_map
 	/**
 	 * URL map
 	 *
+	 * @param  bool
 	 * @return array on success/bool FALSE on failure
 	*/
-	public function get_map() {
+	public function get_map($cache = TRUE) {
 		// cache
-		if ($this->route['module']) {
+		if ($cache == TRUE && $this->route['module']) {
 			return $this->route;
 		}
 
@@ -107,12 +108,8 @@ class ma_url_map
 			return FALSE;
 		}
 
-		$this->admin_page();
 		$this->language_detection();
-
-		if ($this->route['module'] != 'admin') {
-			$this->module_detection();
-		}
+		$this->module_detection();
 
 		return TRUE;
 	}
@@ -133,18 +130,19 @@ class ma_url_map
 			$this->route['base_path'] = MA_BASE_PATH;
 		}
 
-		// easy linking
+		// easy link
 		if ($this->route['base_path'] == '/') {
 			$this->route['base_path'] = NULL;
 		}
 
 		$url_path = $this->client->url_path($opt);
 		if ($url_path) {
-			$url_path = preg_replace('#/+#', '/', $url_path);
+			$url_path = preg_replace('#/+#', '/', $url_path, 1);
 		}
 		if ($url_path == '') {
 			$url_path = '/';
 		}
+
 		return $url_path;
 	}
 
@@ -249,22 +247,17 @@ class ma_url_map
 
 		foreach (MA_MODULES as $mod_name => $module) {
 			$mod_name = strtolower($mod_name);
-
-			if ($mod_name == 'admin') {
-				continue;
-			}
-
 			if ($module['url_path'] == $this->map[0] && $module['enabled'] == TRUE) {
 				$set = TRUE;
 				$this->route['module'] = $mod_name;
 
-				// remove module_url from path
+				// remove module_url path
 				unset($this->map[0]);
 				$this->map = array_merge($this->map);
 				break;
 			}
 
-			if ($module['url_path'] == '*') {
+			if ($module['url_path'] == '*' && $default_mod == NULL) {
 				$default_mod = $mod_name;
 			}
 		}
@@ -272,42 +265,6 @@ class ma_url_map
 		if ($set == FALSE) {
 			$this->route['module'] = $default_mod;
 		}
-		return;
-	}
-
-	/**
-	 * Admin page
-	 *
-	 * @return void
-	*/
-	protected function admin_page() {
-		if (isset(MA_MODULES['admin']) == FALSE || MA_MODULES['admin']['enabled'] != TRUE) {
-			return;
-		}
-
-		if ($this->map[0] != MA_MODULES['admin']['url_path']) {
-			return;
-		}
-
-		$this->route['module'] = 'admin';
-
-		// remove admin url_path
-		unset($this->map[0]);
-
-		$this->languages = ma_config('admin_languages');
-		$this->default_language = ma_config('admin_default_language');
-
-		if (isset($this->map[1], $admin_langs[$this->map[1]])) {
-			$this->default_language = $this->map[1];
-			$this->map[1] = 'index';
-		}
-
-		if (isset($this->map[1]) == FALSE) {
-			$this->map[1] = 'index';
-		}
-
-		$this->map = array_merge($this->map);
-
 		return;
 	}
 }

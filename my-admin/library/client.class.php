@@ -27,7 +27,7 @@ defined('MA_PATH') OR exit('Restricted access');
 /**
  * Input Class
  *
- * @modified : 30 November 2017
+ * @modified : 17 September 2018
  * @created  : 12 April 2015
  * @since    : version 0.4
  * @author   : Ali Bakhtiar (ali@persianicon.com)
@@ -145,7 +145,7 @@ class ma_client
 	*/
 	public function server_port_x() {
 		$px = $this->security->fetch_array($_SERVER, 'HTTP_X_FORWARDED_PORT', 'int', 6);
-		if (!empty($px)) {
+		if (empty($px) == FALSE) {
 			return $px;
 		}
 		return 0;
@@ -171,7 +171,7 @@ class ma_client
 	 * _POST
 	 *
 	 * @param string
-	 * @param sttring the security filters name
+	 * @param sttring - security filters name
 	 * @param int the maximum length
 	 * @return void
 	*/
@@ -183,7 +183,7 @@ class ma_client
 	 * _GET or _POST
 	 *
 	 * @param string
-	 * @param sttring the security filters name
+	 * @param sttring - security filters name
 	 * @param int the maximum length
 	 * @return void
 	*/
@@ -247,6 +247,16 @@ class ma_client
 		$url_rem_que = NULL;
 
 		if (isset($opt['remove_path']) && $opt['remove_path'] != FALSE) {
+
+			/***
+			foreach ($opt['remove_path'] as $p) {
+				echo strlen($p) . "<br>\n";
+				if (substr($url, strlen($p)) == $p) {
+					$url = substr_replace($p, '', 0, $url);
+					break;
+				}
+			}
+			***/
 			$url = str_replace($opt['remove_path'], '', $url);
 		}
 
@@ -265,7 +275,7 @@ class ma_client
 	 * Get Cookie
 	 *
 	 * @param string
-	 * @param sttring the security filters name
+	 * @param sttring - security filters name
 	 * @param string the number of seconds until expiration
 	 * @param string the cookie prefix
 	 * @param int the maximum length
@@ -371,7 +381,7 @@ class ma_client
 	 * @return bool TRUE on yes/bool FALSE on no
 	*/
 	public function is_ajax() {
-		if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || 
+		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) == FALSE || 
 		   'xmlhttprequest' != strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])) {
 			return FALSE;
 		}

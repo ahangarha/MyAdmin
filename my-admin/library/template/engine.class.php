@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package	  MyAdmin Content Management System
- * @link      http://www.myadmincms.com/
+ * @link      http://www.persianicon.com/myadmin
  * @copyright Persian Icon Software
  * @link      https://www.persianicon.com/
 */
