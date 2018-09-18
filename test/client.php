@@ -9,8 +9,6 @@ require_once(__DIR__.'/ma.inc.php');
 
 myWebsite(FALSE);
 
-define('CRLF', "\n");
-
 header('Content-Type: text/plain');
 
 $client =& ma_class('client');

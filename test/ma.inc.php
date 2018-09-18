@@ -27,3 +27,7 @@ function myWebsite($run = TRUE) {
 		$myadmin->run();
 	}
 }
+
+if (defined('CRLF') == FALSE) {
+	define('CRLF', "\n");
+}
