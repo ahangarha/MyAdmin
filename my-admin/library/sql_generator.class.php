@@ -27,7 +27,7 @@ defined('MA_PATH') OR exit('Restricted access');
 /**
  * SQL generator class
  *
- * @modified : 14 November 2017
+ * @modified : 18 September 2018
  * @created  : 29 January 2016
  * @since    : version 0.4
  * @author   : Ali Bakhtiar (ali@persianicon.com)
@@ -525,7 +525,7 @@ class ma_sql_generator
 		// MySQL
 		if ($this->drive == 'mysql') {
 			// Engine
-			if (isset($options['engine']) && strtolower($options['engine']) === 'myisbm') {
+			if (isset($options['engine']) && strtolower($options['engine']) === 'myisam') {
 				$sql_code .= "\n ENGINE = MyISAM";
 			}
 			else {
