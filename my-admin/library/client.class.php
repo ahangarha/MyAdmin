@@ -27,11 +27,13 @@ defined('MA_PATH') OR exit('Restricted access');
 /**
  * Input Class
  *
- * @modified : 17 September 2018
+ * @modified : 18 September 2018
  * @created  : 12 April 2015
  * @since    : version 0.4
  * @author   : Ali Bakhtiar (ali@persianicon.com)
 */
+
+ma_include('library/user_agents.func.php');
 
 class ma_client
 {
@@ -56,7 +58,8 @@ class ma_client
 			'ip' => NULL,
 			'domain' => NULL,
 			'url_path' => NULL,
-			'user_agent' => NULL
+			'user_agent' => NULL,
+			'browser'    => NULL
 		];
 	}
 
@@ -359,13 +362,7 @@ class ma_client
 			return $this->client_cache['user_agent'];
 		}
 
-		if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-			$user_agent = htmlentities((string)$_SERVER['HTTP_X_REQUESTED_WITH']);
-		}
-		else if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$user_agent = htmlentities((string)$_SERVER['HTTP_X_FORWARDED_FOR']);
-		}
-		else if (isset($_SERVER['HTTP_USER_AGENT'])) {
+		if (isset($_SERVER['HTTP_USER_AGENT'])) {
 			$user_agent = htmlentities((string)$_SERVER['HTTP_USER_AGENT']);
 		}
 		else {
@@ -386,6 +383,27 @@ class ma_client
 			return FALSE;
 		}
 		return TRUE;
+	}
+
+	/**
+	 * Get Browser Info
+	 *
+	 * @return array on success/bool FALSE on failure
+	*/
+	public function browser() {
+		// cache
+		if ($this->client_cache['browser'] != NULL) {
+			return $this->client_cache['browser'];
+		}
+
+		if (empty($this->client_cache['user_agent'])) {
+			if ($this->user_agent() == FALSE) {
+				return FALSE;
+			}
+		}
+
+		$this->client_cache['browser'] = ma_browser_detection($this->client_cache['user_agent']);
+		return $this->client_cache['browser'];
 	}
 
 	/******************************
