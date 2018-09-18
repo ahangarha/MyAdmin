@@ -15,7 +15,6 @@
 
 [ترجمه غیر رسمی مجوز GPL](https://www.persianicon.com/gpl2-fa.html)
 
-
 ## اطلاعات بیشتر
 
 می‌توانید سوالات و نظرات خود را درباره این برنامه با ما در میان بگذارید.
@@ -23,4 +22,3 @@
 [وب سایت رسمی](https://www.persianicon.com/myadmin)
 
 [مدیر توسعه](https://twitter.com/ali_bakhtiar)
-
